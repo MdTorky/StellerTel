@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1a2e4d;
+  --color-accent: #3ab4a2;
+  --color-signal: #ffc857;
+  --color-lighttext: #f9f9f9;
+  --color-darktext: #2b2b2b;
+}
+
+@layer base {
+  html {
+    font-family: "Inter", sans-serif;
+  }
+
+  body {
+    @apply bg-lighttext text-darktext;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  p {
+    @apply text-base md:text-lg;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-16;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white font-medium py-3 px-6 rounded-lg hover:bg-primary/90 transition-all;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-primary text-primary font-medium py-3 px-6 rounded-lg hover:bg-primary/10 transition-all;
+  }
+}
