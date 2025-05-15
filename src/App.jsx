@@ -11,8 +11,9 @@ import TermsPrivacyPage from './pages/TermsPrivacyPage'
 
 function App() {
 
-  return (
+  const api = import.meta.env.VITE_APP_API_URL
 
+  return (
     <Router>
       <div className="flex flex-col min-h-screen font-sans">
         <Navbar />
