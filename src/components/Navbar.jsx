@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { motion, AnimatePresence } from "framer-motion"
 import logo from '../assets/imgs/STLogo.png'
 import { Icon } from "@iconify/react";
-
 
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
     const [activeSection, setActiveSection] = useState("")
-    const location = useLocation()
 
     const sections = ["what-we-do", "our-sectors", "our-partners", "why-stellartel", "contact"]
 
-    // Handle scroll event to change navbar style and detect active section
+
+    const location = useLocation()
+
+    // Handle scroll event to change navbar style
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 50) {
@@ -22,7 +24,7 @@ export const Navbar = () => {
                 setIsScrolled(false)
             }
 
-            // Find current active section
+
             let currentSection = ""
             sections.forEach((sectionId) => {
                 const section = document.getElementById(sectionId)
@@ -34,6 +36,7 @@ export const Navbar = () => {
                 }
             })
             setActiveSection(currentSection)
+
         }
 
         window.addEventListener("scroll", handleScroll)
@@ -45,6 +48,7 @@ export const Navbar = () => {
         setIsMenuOpen(false)
 
         if (location.pathname !== "/") {
+            // If not on homepage, navigate to homepage first
             window.location.href = `/#${sectionId}`
             return
         }
@@ -55,52 +59,82 @@ export const Navbar = () => {
         }
     }
 
-    const renderNavItem = (label, sectionId) => (
-        <button
+    const renderNavItem = (label, sectionId, index) => (
+        <motion.button
             key={sectionId}
             onClick={() => scrollToSection(sectionId)}
-            className={`font-medium cursor-pointer text-darktext hover:text-accent duration-300 ${activeSection === sectionId ? "text-accent" : ""}`}
+            className={`font-medium cursor-pointer text-darktext hover:text-accent ${activeSection === sectionId ? "text-accent" : ""}`}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.1 * (index + 1), type: "spring", stiffness: 300 } }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.1 }}
         >
             {label}
-        </button>
+            <motion.span
+                className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"
+                initial={{ scaleX: 0 }}
+                whileHover={{ scaleX: 1 }}
+                transition={{ duration: 0.2 }}
+            />
+        </motion.button>
     )
 
     return (
-        <header
-            className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-4"}`}
+        <motion.header
+            className={`sticky py-4 top-0 z-50 bg-gradient-to-r from-black/10 to-white/50  rounded-b-xl w-full  md:w-300 m-auto flex ${isScrolled ? "  shadow-xl" : ""}`}
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
         >
-            <div className="container-custom">
+            <div className="container-custom w-full">
                 <div className="flex items-center justify-between">
-                    <Link to="/" className="text-2xl font-bold text-primary">
-                        <img src={logo} alt="" className="w-30" />
-                    </Link>
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 300 }}>
+                        <Link to="/" className="text-2xl font-bold text-primary">
+                            <img src={logo} alt="" className="w-30" />
+                        </Link>
+                    </motion.div>
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center space-x-8">
-                        {renderNavItem("What We Do", "what-we-do")}
-                        {renderNavItem("Our Sectors", "our-sectors")}
-                        {renderNavItem("Our Partners", "our-partners")}
-                        {renderNavItem("Why StellarTel", "why-stellartel")}
-                        {renderNavItem("Contact", "contact")}
+                        {renderNavItem("What We Do", "what-we-do", 1)}
+                        {renderNavItem("Our Sectors", "our-sectors", 2)}
+                        {renderNavItem("Our Partners", "our-partners", 3)}
+                        {renderNavItem("Why StellarTel", "why-stellartel", 4)}
+                        {renderNavItem("Contact", "contact", 5)}
                     </nav>
 
                     {/* Mobile Menu Button */}
-                    <button className="md:hidden text-darktext text-3xl cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    <motion.button
+                        className="md:hidden text-darktext text-3xl"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
                         {isMenuOpen ? <Icon icon="line-md:menu-to-close-transition" /> : <Icon icon="duo-icons:menu" />}
-                    </button>
+                    </motion.button>
                 </div>
 
                 {/* Mobile Navigation */}
-                {isMenuOpen && (
-                    <nav className="md:hidden py-4 flex flex-col space-y-4">
-                        {renderNavItem("What We Do", "what-we-do")}
-                        {renderNavItem("Our Sectors", "our-sectors")}
-                        {renderNavItem("Our Partners", "our-partners")}
-                        {renderNavItem("Why StellarTel", "why-stellartel")}
-                        {renderNavItem("Contact", "contact")}
-                    </nav>
-                )}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.nav
+                            className="md:hidden py-4 flex flex-col space-y-4"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            {renderNavItem("What We Do", "what-we-do", 1)}
+                            {renderNavItem("Our Sectors", "our-sectors", 2)}
+                            {renderNavItem("Our Partners", "our-partners", 3)}
+                            {renderNavItem("Why StellarTel", "why-stellartel", 4)}
+                            {renderNavItem("Contact", "contact", 5)}
+                        </motion.nav>
+                    )}
+                </AnimatePresence>
             </div>
-        </header>
+        </motion.header>
     )
 }

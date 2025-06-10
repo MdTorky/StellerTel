@@ -6,6 +6,7 @@
   --color-signal: #ffc857;
   --color-lighttext: #f9f9f9;
   --color-darktext: #2b2b2b;
+  --color-customviolet: #3ab4a2;
 }
 
 @layer base {
@@ -13,9 +14,9 @@
     font-family: "Inter", sans-serif;
   }
 
-  body {
+  /* body {
     @apply bg-lighttext text-darktext;
-  }
+  } */
 
   h1,
   h2,

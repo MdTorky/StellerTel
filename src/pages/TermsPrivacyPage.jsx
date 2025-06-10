@@ -1,17 +1,35 @@
+"use client"
+
 import { Link } from "react-router-dom"
+import { motion } from "framer-motion"
+import { AnimatedSection } from "../components/AnimatedSection"
 
 const TermsPrivacyPage = () => {
     return (
-        <div className="container-custom py-16">
+        <motion.div
+            className="container-custom py-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+        >
             <div className="mb-8">
-                <Link to="/" className="text-primary hover:underline mb-8 inline-block">
-                    &larr; Back to Home
-                </Link>
-                <h1 className="text-3xl md:text-4xl font-bold mb-4">Terms & Privacy</h1>
+                <motion.div whileHover={{ x: -5 }} transition={{ type: "spring", stiffness: 300 }}>
+                    <Link to="/" className="text-primary hover:underline mb-8 inline-block">
+                        &larr; Back to Home
+                    </Link>
+                </motion.div>
+                <motion.h1
+                    className="text-3xl md:text-4xl font-bold mb-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                    Terms & Privacy
+                </motion.h1>
             </div>
 
             {/* Terms & Conditions */}
-            <div className="mb-16">
+            <AnimatedSection animation="slideUp" delay={0.3} className="mb-16">
                 <h2 className="text-2xl font-bold mb-4">STELLARTEL TERMS & CONDITIONS</h2>
                 <p className="mb-4">Effective Date: May 2025</p>
                 <p className="mb-6">
@@ -83,15 +101,20 @@ const TermsPrivacyPage = () => {
                     <div>
                         <h3 className="text-xl font-bold mb-2">7. Contact</h3>
                         <p>For questions, please contact us at:</p>
-                        <a href="mailto:andrewpenders@stellartel.com.my" className="text-primary hover:underline">
+                        <motion.a
+                            href="mailto:andrewpenders@stellartel.com.my"
+                            className="text-primary hover:underline"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                        >
                             andrewpenders@stellartel.com.my
-                        </a>
+                        </motion.a>
                     </div>
                 </div>
-            </div>
+            </AnimatedSection>
 
             {/* Privacy Policy */}
-            <div>
+            <AnimatedSection animation="slideUp" delay={0.5}>
                 <h2 className="text-2xl font-bold mb-4">STELLARTEL PRIVACY POLICY</h2>
                 <p className="mb-4">Effective Date: May 2025</p>
                 <p className="mb-6">
@@ -151,13 +174,18 @@ const TermsPrivacyPage = () => {
                     <div>
                         <h3 className="text-xl font-bold mb-2">7. Contact</h3>
                         <p>To request data updates or ask questions, email us at:</p>
-                        <a href="mailto:andrewpenders@stellartel.com.my" className="text-primary hover:underline">
+                        <motion.a
+                            href="mailto:andrewpenders@stellartel.com.my"
+                            className="text-primary hover:underline"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                        >
                             andrewpenders@stellartel.com.my
-                        </a>
+                        </motion.a>
                     </div>
                 </div>
-            </div>
-        </div>
+            </AnimatedSection>
+        </motion.div>
     )
 }
 
