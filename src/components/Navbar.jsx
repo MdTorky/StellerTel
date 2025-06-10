@@ -81,7 +81,7 @@ export const Navbar = () => {
 
     return (
         <motion.header
-            className={`sticky py-4 top-0 z-50 bg-gradient-to-r from-black/10 to-white/50  rounded-b-xl w-full  md:w-300 m-auto flex ${isScrolled ? "  shadow-xl" : ""}`}
+            className={`sticky py-4 top-0 z-50 bg-white/50  rounded-b-xl w-full  md:w-300 m-auto flex ${isScrolled ? "  shadow-xl" : ""}`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
